@@ -5,6 +5,7 @@ import { GeminiMeasurementProvider } from "../providers/gemini/measurement-provi
 import fs from "fs";
 import path from "path";
 import { env } from "../env";
+import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
 
 describe("Create Measure Use Case", { timeout: 10000 }, () => {
     let measureRepository: InMemoryTestMeasureRepository;
@@ -53,7 +54,7 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
             image_base64: '',
             measure_type: 'WATER',
             customer_code: "customer-1"
-        })).rejects.toBeInstanceOf(Error);
+        })).rejects.toBeInstanceOf(MeasureAlreadyExistsError);
         expect(measureRepository.items).toHaveLength(1);
     })
 });             

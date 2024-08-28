@@ -2,6 +2,7 @@ import { MeasureType } from "@prisma/client";
 import { MeasureRepository } from "../repositories/measure-repository";
 import { MeasurementProvider } from "../providers/measurement-provider";
 import { convertToImage } from "../utils/convert-to-image";
+import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
 
 interface CreateMeasureUseCaseRequest {
     image_base64: string;
@@ -29,7 +30,7 @@ export class CreateMeasureUseCase {
         const alreadyHasAMeasure = await this.measureRepository.findMeasureByTypeAndDate(measure_type, measure_datetime);
 
         if (alreadyHasAMeasure) {
-            throw new Error("Já existe uma leitura para este tipo no mês atual");
+            throw new MeasureAlreadyExistsError("Já existe uma leitura para este tipo no mês atual");
         }
 
         const image = convertToImage(image_base64);
