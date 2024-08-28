@@ -7,6 +7,7 @@ interface CreateMeasureUseCaseRequest {
     image_base64: string;
     measure_datetime?: Date | null;
     measure_type: MeasureType;
+    customer_code: string;
 }
 
 interface CreateMeasureUseCaseResponse {
@@ -20,7 +21,7 @@ interface CreateMeasureUseCaseResponse {
 export class CreateMeasureUseCase {
     constructor(private measureRepository: MeasureRepository, private measurementProvider: MeasurementProvider) { }
 
-    async execute({ measure_datetime, measure_type, image_base64 }: CreateMeasureUseCaseRequest): Promise<CreateMeasureUseCaseResponse> {
+    async execute({ measure_datetime, measure_type, image_base64, customer_code }: CreateMeasureUseCaseRequest): Promise<CreateMeasureUseCaseResponse> {
         if (!measure_datetime) {
             measure_datetime = new Date();
         }
@@ -40,7 +41,8 @@ export class CreateMeasureUseCase {
             measure_datetime,
             measure_type,
             image_url: `http://localhost:3333/images/${image}`,
-            measure_value: getMeasureValue
+            measure_value: getMeasureValue,
+            customer_code
         });
 
         return { measure };

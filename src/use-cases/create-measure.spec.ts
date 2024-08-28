@@ -28,6 +28,7 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
         const { measure } = await sut.execute({
             image_base64: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAADcCAYAAADdugwRAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVHhe7dbBCQAxCABBk/57zgVyRexjBkQrWFzXGYCQ/W+ADGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIEeYgBxhAnKECcgRJiBHmIAcYQJyhAnIESYgR5iAHGECcoQJyBEmIGfdOe8EaPAxATnCBOQIE5AjTECOMAE5wgTkCBOQI0xAjjABOcIE5AgTkCNMQI4wATnCBOQIE5AjTECOMAE5wgTkCBOQI0xAjjABOcIE5AgTkCNMQI4wATnCBOQIE5AjTECOMAE5wgTkCBOQI0xAjjABOcIExMx8rmwDuKybrtgAAAAASUVORK5CYII=",
             measure_type: 'WATER',
+            customer_code: "customer-1"
         });
 
         console.log(measure.image_url)
@@ -45,11 +46,13 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
         await sut.execute({
             image_base64: '',
             measure_type: 'WATER',
+            customer_code: "customer-1"
         });
 
         await expect(() => sut.execute({
             image_base64: '',
             measure_type: 'WATER',
+            customer_code: "customer-1"
         })).rejects.toBeInstanceOf(Error);
         expect(measureRepository.items).toHaveLength(1);
     })
