@@ -6,6 +6,8 @@ import fs from "fs";
 import path from "path";
 import { env } from "../env";
 import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
+import { MeasureAlreadyConfirmedError } from "./@errors/measure-already-confirmed-error";
+import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
 
 describe("Create Measure Use Case", { timeout: 10000 }, () => {
     let measureRepository: InMemoryTestMeasureRepository;
@@ -60,13 +62,13 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
         await expect(() => sut.execute({
             measure_uuid: measure_uuid,
             confirmed_value: 100
-        })).rejects.toBeInstanceOf(Error);
+        })).rejects.toBeInstanceOf(MeasureAlreadyConfirmedError);
     });
 
     it("should not be able to confirme a undefined measure", async () => {
         await expect(() => sut.execute({
             measure_uuid: 'undefined-uuid',
             confirmed_value: 0
-        })).rejects.toBeInstanceOf(Error);
+        })).rejects.toBeInstanceOf(MeasureNotFoundError);
     });
 });             

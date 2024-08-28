@@ -1,4 +1,6 @@
 import { MeasureRepository } from "../repositories/measure-repository";
+import { MeasureAlreadyConfirmedError } from "./@errors/measure-already-confirmed-error";
+import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
 
 interface CofirmMeasureValueUseCaseRequest {
     measure_uuid: string;
@@ -16,11 +18,11 @@ export class CofirmMeasureValueUseCase {
         const measure = await this.measureRepository.findMeasureByUUID(measure_uuid);
 
         if (!measure) {
-            throw new Error("Leitura não encontrada");
+            throw new MeasureNotFoundError("Leitura não encontrada");
         }
 
         if (measure.has_confirmed && measure.measure_value == confirmed_value) {
-            throw new Error("Leitura já confirmada");
+            throw new MeasureAlreadyConfirmedError("Leitura já confirmada");
         }
 
         measure.has_confirmed = confirmed_value == measure.measure_value ? true : false;
