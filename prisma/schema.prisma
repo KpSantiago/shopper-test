@@ -25,6 +25,7 @@ model Measure {
   measure_datetime DateTime
   has_confirmed    Boolean
   measure_value    Float
+  customer_code    String
 
   @@map("measure")
 }
