@@ -18,6 +18,12 @@ export class InMemoryTestMeasureRepository implements MeasureRepository {
         return item;
     }
 
+    async save(data: Prisma.MeasureUpdateInput) {
+        const itemIndex = this.items.findIndex(m => m.measure_uuid == data.measure_uuid);
+
+        this.items[itemIndex] = data as Measure;
+    }
+
     async findMeasureByTypeAndDate(measureType: MeasureType, date: Date) {
         const item = this.items.find(m => {
             const measureDate = dayjs(date);
@@ -29,6 +35,16 @@ export class InMemoryTestMeasureRepository implements MeasureRepository {
 
             return m.measure_type == measureType && alreadyHasAMeasure
         });
+
+        if (!item) {
+            return null;
+        }
+
+        return item;
+    }
+
+    async findMeasureByUUID(uuid: string) {
+        const item = this.items.find(m => m.measure_uuid == uuid);
 
         if (!item) {
             return null;
