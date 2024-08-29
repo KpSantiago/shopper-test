@@ -1,4 +1,4 @@
 import { env } from "./env";
 import { app } from "./app";
 
-app.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => console.log("🚀API Initialized!"))
+app.listen({ port: env.PORT ?? 3333, host: "0.0.0.0" }).then(() => console.log("🚀API Initialized!"))

@@ -6,7 +6,7 @@ import { GoogleAIFileManager } from "@google/generative-ai/server";
 
 export class GeminiMeasurementProvider implements MeasurementProvider {
     async getMeasure(image: string, measureType: string) {
-        if (env.NODE_ENV == "test") {
+        if (env.NODE_ENV == "test" || !env.NODE_ENV) {
             return 0;
         }
 
