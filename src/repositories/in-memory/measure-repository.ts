@@ -52,4 +52,14 @@ export class InMemoryTestMeasureRepository implements MeasureRepository {
 
         return item;
     }
+
+    async findManyMeasuresByCustomerCode(code: string, query?: MeasureType) {
+        let items = this.items.filter(m => m.customer_code == code);
+
+        if (query) {
+            items = items.filter(m => m.measure_type == query);
+        }
+
+        return items;
+    }
 }
