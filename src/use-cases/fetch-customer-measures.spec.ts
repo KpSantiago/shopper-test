@@ -1,7 +1,5 @@
 import { describe, it, beforeEach, expect, afterAll, vi } from "vitest";
 import { InMemoryTestMeasureRepository } from "../repositories/in-memory/measure-repository";
-import fs from "fs";
-import path from "path";
 import { env } from "../env";
 import { FetchCustomerMeasuresUseCase } from "./fetch-customer-measures";
 import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
@@ -18,9 +16,6 @@ describe("Fetch Customer Measure Use Case", () => {
     });
 
     afterAll(async () => {
-        const files = fs.readdirSync(path.join(__dirname, "../images/"));
-        const deleteFilePromises = files.map(file => fs.unlinkSync(path.join(__dirname, "../images/" + file)));
-        await Promise.all(deleteFilePromises);
         vi.useRealTimers();
     })
 

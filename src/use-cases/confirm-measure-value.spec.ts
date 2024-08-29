@@ -1,11 +1,7 @@
-import { describe, it, beforeEach, expect, afterAll } from "vitest";
+import { describe, it, beforeEach, expect } from "vitest";
 import { InMemoryTestMeasureRepository } from "../repositories/in-memory/measure-repository";
 import { CofirmMeasureValueUseCase } from "./confirm-measure-value";
-import { GeminiMeasurementProvider } from "../providers/gemini/measurement-provider";
-import fs from "fs";
-import path from "path";
 import { env } from "../env";
-import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
 import { MeasureAlreadyConfirmedError } from "./@errors/measure-already-confirmed-error";
 import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
 
@@ -18,12 +14,6 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
         measureRepository = new InMemoryTestMeasureRepository();
         sut = new CofirmMeasureValueUseCase(measureRepository);
     });
-
-    afterAll(async () => {
-        const files = fs.readdirSync(path.join(__dirname, "../images/"));
-        const deleteFilePromises = files.map(file => fs.unlinkSync(path.join(__dirname, "../images/" + file)));
-        await Promise.all(deleteFilePromises);
-    })
 
     it("should be able to create a measure", async () => {
         const { measure_uuid } = await measureRepository.create({
