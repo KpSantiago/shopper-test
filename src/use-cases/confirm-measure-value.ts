@@ -2,19 +2,19 @@ import { MeasureRepository } from "../repositories/measure-repository";
 import { MeasureAlreadyConfirmedError } from "./@errors/measure-already-confirmed-error";
 import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
 
-interface CofirmMeasureValueUseCaseRequest {
+interface ConfirmMeasureValueUseCaseRequest {
     measure_uuid: string;
     confirmed_value: number;
 }
 
-interface CofirmMeasureValueUseCaseResponse {
+interface ConfirmMeasureValueUseCaseResponse {
     success: boolean
 }
 
-export class CofirmMeasureValueUseCase {
+export class ConfirmMeasureValueUseCase {
     constructor(private measureRepository: MeasureRepository) { }
 
-    async execute({ measure_uuid, confirmed_value }: CofirmMeasureValueUseCaseRequest): Promise<CofirmMeasureValueUseCaseResponse> {
+    async execute({ measure_uuid, confirmed_value }: ConfirmMeasureValueUseCaseRequest): Promise<ConfirmMeasureValueUseCaseResponse> {
         const measure = await this.measureRepository.findMeasureByUUID(measure_uuid);
 
         if (!measure) {

@@ -1,18 +1,18 @@
 import { describe, it, beforeEach, expect } from "vitest";
 import { InMemoryTestMeasureRepository } from "../repositories/in-memory/measure-repository";
-import { CofirmMeasureValueUseCase } from "./confirm-measure-value";
+import { ConfirmMeasureValueUseCase } from "./confirm-measure-value";
 import { env } from "../env";
 import { MeasureAlreadyConfirmedError } from "./@errors/measure-already-confirmed-error";
 import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
 
 describe("Create Measure Use Case", { timeout: 10000 }, () => {
     let measureRepository: InMemoryTestMeasureRepository;
-    let sut: CofirmMeasureValueUseCase;
+    let sut: ConfirmMeasureValueUseCase;
 
     beforeEach(() => {
         env.NODE_ENV = "test";
         measureRepository = new InMemoryTestMeasureRepository();
-        sut = new CofirmMeasureValueUseCase(measureRepository);
+        sut = new ConfirmMeasureValueUseCase(measureRepository);
     });
 
     it("should be able to create a measure", async () => {
