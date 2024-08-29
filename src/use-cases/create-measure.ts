@@ -1,11 +1,10 @@
 import { MeasureType } from "@prisma/client";
 import { MeasureRepository } from "../repositories/measure-repository";
 import { MeasurementProvider } from "../providers/measurement-provider";
-import { convertToImage } from "../utils/convert-to-image";
 import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
 
 interface CreateMeasureUseCaseRequest {
-    image_base64: string;
+    image_name: string;
     measure_datetime?: Date | null;
     measure_type: MeasureType;
     customer_code: string;
@@ -22,7 +21,7 @@ interface CreateMeasureUseCaseResponse {
 export class CreateMeasureUseCase {
     constructor(private measureRepository: MeasureRepository, private measurementProvider: MeasurementProvider) { }
 
-    async execute({ measure_datetime, measure_type, image_base64, customer_code }: CreateMeasureUseCaseRequest): Promise<CreateMeasureUseCaseResponse> {
+    async execute({ measure_datetime, measure_type, image_name, customer_code }: CreateMeasureUseCaseRequest): Promise<CreateMeasureUseCaseResponse> {
         if (!measure_datetime) {
             measure_datetime = new Date();
         }
@@ -33,19 +32,25 @@ export class CreateMeasureUseCase {
             throw new MeasureAlreadyExistsError("Já existe uma leitura para este tipo no mês atual");
         }
 
-        const image = convertToImage(image_base64);
+        const getMeasureValue = await this.measurementProvider.getMeasure(image_name, measure_type);
 
-        const getMeasureValue = await this.measurementProvider.getMeasure(image, measure_type);
-
-        const measure = await this.measureRepository.create({
+        const { image_url, measure_uuid, measure_value } = await this.measureRepository.create({
             has_confirmed: false,
             measure_datetime,
             measure_type,
-            image_url: `http://localhost:3333/images/${image}`,
+            image_url: `http://localhost:3333/images/${image_name}`,
             measure_value: getMeasureValue,
             customer_code
         });
 
-        return { measure };
+        // console.log(measure, getMeasureValue, image);
+
+        return {
+            measure: {
+                image_url,
+                measure_uuid,
+                measure_value
+            }
+        };
     }
 }
