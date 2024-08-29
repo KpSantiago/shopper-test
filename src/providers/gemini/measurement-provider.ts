@@ -6,11 +6,11 @@ import { GoogleAIFileManager } from "@google/generative-ai/server";
 
 export class GeminiMeasurementProvider implements MeasurementProvider {
     async getMeasure(image: string, measureType: string) {
-        if (env.NODE_ENV == "test" || !env.NODE_ENV) {
+        if ((env.NODE_ENV == "test" || !env.NODE_ENV)) {
             return 0;
         }
 
-        const fileManager = new GoogleAIFileManager(env.GEMINI_API_KEY);
+        const fileManager = new GoogleAIFileManager(env.GEMINI_API_KEY!);
         const mimeType = `image/${image.split(".")[1]}`;
 
         // file upload
@@ -23,7 +23,7 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
         const getFileResponse = await fileManager.getFile(uploadResponse.file.name);
 
         // configurating my api key
-        const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
+        const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY!);
 
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash"
