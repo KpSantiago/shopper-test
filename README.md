@@ -1,0 +1,2 @@
+- [ ] validação dos dados do caso de uso e criação
+- [ ] validação dos dados do caso de uso de confirmação
