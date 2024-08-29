@@ -18,8 +18,8 @@ export class InMemoryTestMeasureRepository implements MeasureRepository {
         return item;
     }
 
-    async save(data: Prisma.MeasureUpdateInput) {
-        const itemIndex = this.items.findIndex(m => m.measure_uuid == data.measure_uuid);
+    async save(measure_uuid: string, data: Prisma.MeasureUpdateInput) {
+        const itemIndex = this.items.findIndex(m => m.measure_uuid == measure_uuid);
 
         this.items[itemIndex] = data as Measure;
     }

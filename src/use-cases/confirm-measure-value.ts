@@ -27,7 +27,7 @@ export class CofirmMeasureValueUseCase {
 
         measure.has_confirmed = confirmed_value == measure.measure_value ? true : false;
 
-        this.measureRepository.save(measure);
+        this.measureRepository.save(measure_uuid, measure);
 
         return { success: true };
     }
