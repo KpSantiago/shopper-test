@@ -20,7 +20,7 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
     });
 
     afterAll(async () => {
-        const files = fs.readdirSync(path.dirname("") + "/src/images");
+        const files = fs.readdirSync(path.join(__dirname, "../images/"));
         const deleteFilePromises = files.map(file => fs.unlinkSync(path.join(__dirname, "../images/" + file)));
         await Promise.all(deleteFilePromises);
     })
