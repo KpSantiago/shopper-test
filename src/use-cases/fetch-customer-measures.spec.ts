@@ -43,6 +43,47 @@ describe("Fetch Customer Measure Use Case", () => {
         expect(measures).toHaveLength(10);
     });
 
+    it("should be able to fecth measures of a customer by his code", async () => {
+        vi.setSystemTime(new Date(2024, 10, 5));
+
+        for (let i = 1; i <= 5; i++) {
+            await measureRepository.create({
+                customer_code: "my-customer-code",
+                has_confirmed: true,
+                image_url: "",
+                measure_datetime: new Date(),
+                measure_type: "GAS",
+                measure_value: Number(`${i}30`)
+            });
+
+            await measureRepository.create({
+                customer_code: "my-customer-code",
+                has_confirmed: true,
+                image_url: "",
+                measure_datetime: new Date(),
+                measure_type: "WATER",
+                measure_value: Number(`${i}05`)
+            });
+
+            vi.advanceTimersByTime(1000 * 60 * 60 * 24 * 30); //30 days
+        }
+
+        const { customer_code, measures } = await sut.execute({
+            customer_code: "my-customer-code",
+            query: "WATER"
+        });
+
+        expect(customer_code).toEqual("my-customer-code");
+        expect(measures).toHaveLength(5);
+        expect(measures).toEqual([
+            expect.objectContaining({measure_type: "WATER"}),
+            expect.objectContaining({measure_type: "WATER"}),
+            expect.objectContaining({measure_type: "WATER"}),
+            expect.objectContaining({measure_type: "WATER"}),
+            expect.objectContaining({measure_type: "WATER"}),
+        ]);
+    });
+
     it("should not be able to fetch measures of a customer_code", async () => {
         await expect(() => sut.execute({
             customer_code: 'my-customer-code',
