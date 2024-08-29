@@ -6,7 +6,7 @@ import { GoogleAIFileManager } from "@google/generative-ai/server";
 
 export class GeminiMeasurementProvider implements MeasurementProvider {
     async getMeasure(image: string, measureType: string) {
-        if ((env.NODE_ENV == "test" || !env.NODE_ENV)) {
+        if (env.NODE_ENV == "test") {
             return 0;
         }
 
@@ -18,6 +18,8 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
             mimeType,
             displayName: `measurement of ${measureType.toLocaleLowerCase()} record`
         });
+
+        console.log(uploadResponse.file)
 
         // verify file upload
         const getFileResponse = await fileManager.getFile(uploadResponse.file.name);
@@ -38,10 +40,10 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
                 },
             },
             {
-                text: `return the measurement of ${measureType.toLocaleLowerCase()} consumption only the number`
+                text: `read this image and return to me the ${measureType.toLocaleLowerCase()} consumption for the month that is shown in this ${measureType.toLocaleLowerCase()} record. Only the consuption number.`
             }
         ]);
-
+        console.log(results.response.text(), getFileResponse.uri)
         return Number(results.response.text());
     }
 }
