@@ -32,8 +32,6 @@ describe("Create Measure Use Case", { timeout: 10000 }, () => {
             customer_code: "customer-1"
         });
 
-        console.log(measure.image_url)
-
         expect(measureRepository.items).toHaveLength(1);
         expect(measure).toEqual(
             expect.objectContaining({
