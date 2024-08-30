@@ -3,6 +3,7 @@ import fastifyStatic from "@fastify/static";
 import path from "path";
 import { measuresRoutes } from "./http/controllers/routes";
 import { ZodError } from "zod";
+import { verifyImageURL } from "./http/middlewares/verify-image-url";
 
 const app = fastify();
 
@@ -42,5 +43,12 @@ app.register(fastifyStatic, {
     root: path.join(__dirname, './images/'),
     prefix: '/images/',
 });
+
+// Verify the image URL each 10 days
+const TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
+
+setInterval(async () => {
+    await verifyImageURL();
+}, TEN_DAYS);
 
 export { app }
