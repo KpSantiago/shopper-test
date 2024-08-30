@@ -1,5 +1,5 @@
-import path from "path";
 import { env } from "../../env";
+import path from "path";
 import { MeasurementProvider } from "../measurement-provider";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleAIFileManager } from "@google/generative-ai/server";
@@ -19,8 +19,6 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
             displayName: `measurement of ${measureType.toLocaleLowerCase()} record`
         });
 
-        console.log(uploadResponse.file)
-
         // verify file upload
         const getFileResponse = await fileManager.getFile(uploadResponse.file.name);
 
@@ -39,11 +37,9 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
                     fileUri: getFileResponse.uri
                 },
             },
-            {
-                text: `read this image and return to me the ${measureType.toLocaleLowerCase()} consumption for the month that is shown in this ${measureType.toLocaleLowerCase()} record. Only the consuption number.`
-            }
+            { text: `read this image and return to me the ${measureType.toLocaleLowerCase()} consumption for the month that is shown in this ${measureType.toLocaleLowerCase()} record. only the number and normalize the number to a number that database accept` }
         ]);
-        console.log(results.response.text(), getFileResponse.uri)
+
         return Number(results.response.text());
     }
 }
