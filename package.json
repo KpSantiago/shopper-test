@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "scripts": {
     "start:dev": "tsnd --transpile-only --respawn --ignore-watch ./node-modules src/server.ts",
-    "start:prod": "node ./build/server.js && npx prisma migrate deploy",
+    "start:prod": "node ./build/server.js",
     "test": "vitest --run",
     "test:watch": "vitest",
     "build": "tsup src --out-dir build"
