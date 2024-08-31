@@ -1,6 +1,20 @@
 version: "3"
 
 services:
+  api:
+    build: .
+    ports:
+      - 3333:3333
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgresql://docker:docker@database:5432/test_database?schema=public
+      - NODE_ENV=dev
+      - PORT=3333
+      - GEMINI_API_KEY=AIzaSyAy0dL0mMShPZ4i33IRzdbvB3boZVqFTWc
+    volumes:
+      - ./uploads:/src/images
+
   database:
     image: bitnami/postgresql
     ports:
