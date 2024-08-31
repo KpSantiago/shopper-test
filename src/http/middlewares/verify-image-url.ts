@@ -28,7 +28,7 @@ export async function verifyImageURL(): Promise<void> {
             }
         })
 
-        fs.unlinkSync(path.join(__dirname, `../../images/${image}`));
+        fs.unlinkSync(path.join(__dirname, `./images/${image}`));
     })
 }
 

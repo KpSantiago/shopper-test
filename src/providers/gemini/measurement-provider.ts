@@ -14,7 +14,7 @@ export class GeminiMeasurementProvider implements MeasurementProvider {
         const mimeType = `image/${image.split(".")[1]}`;
 
         // file upload
-        const uploadResponse = await fileManager.uploadFile(`${path.dirname("")}/src/images/${image}`, {
+        const uploadResponse = await fileManager.uploadFile(path.join(__dirname, `./images/${image}`), {
             mimeType,
             displayName: `measurement of ${measureType.toLocaleLowerCase()} record`
         });

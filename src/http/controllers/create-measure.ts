@@ -8,7 +8,7 @@ import path from "path";
 
 export async function createMeasure(request: FastifyRequest, reply: FastifyReply) {
     const bodySchema = z.object({
-        customer_code: z.string({ message: "customer_code é obrigatório" }).min(1, {message: "O campo deve possuir no mínimo 1 caractere."}),
+        customer_code: z.string({ message: "customer_code é obrigatório" }).min(1, { message: "O campo deve possuir no mínimo 1 caractere." }),
         image: z.string().refine((data) => {
             return /^data:image\/(png|jpg|jpeg);base64,[A-Za-z0-9\+/=]/.test(data);
         }, {
@@ -37,7 +37,7 @@ export async function createMeasure(request: FastifyRequest, reply: FastifyReply
         });
 
     } catch (err) {
-        fs.unlinkSync(path.join(__dirname, `../../images/${imageName}`))
+        fs.unlinkSync(path.join(__dirname, `./images/${imageName}`))
         const error = errorDetector(err);
         const { message } = err as Error;
         return reply.status(error!.code).send({
