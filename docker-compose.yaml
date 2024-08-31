@@ -9,7 +9,7 @@ services:
       - database
     environment:
       - DATABASE_URL=postgresql://docker:docker@database:5432/test_database?schema=public
-      - NODE_ENV=dev
+      - NODE_ENV=production
       - PORT=3333
       - GEMINI_API_KEY=AIzaSyAy0dL0mMShPZ4i33IRzdbvB3boZVqFTWc
     volumes:
