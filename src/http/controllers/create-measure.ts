@@ -39,10 +39,12 @@ export async function createMeasure(request: FastifyRequest, reply: FastifyReply
     } catch (err) {
         fs.unlinkSync(path.join(__dirname, `./images/${imageName}`))
         const error = errorDetector(err);
-        const { message } = err as Error;
-        return reply.status(error!.code).send({
-            error_code: error!.type,
-            error_description: message
-        })
+        if (error) {
+            const { message } = err as Error;
+            return reply.status(error!.code).send({
+                error_code: error!.type,
+                error_description: message
+            })
+        }
     }
 }

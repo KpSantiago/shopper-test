@@ -25,10 +25,12 @@ export async function confirmMeasureValue(request: FastifyRequest, reply: Fastif
 
     } catch (err) {
         const error = errorDetector(err);
-        const { message } = err as Error;
-        return reply.status(error!.code).send({
-            error_code: error!.type,
-            error_description: message
-        })
+        if (error) {
+            const { message } = err as Error;
+            return reply.status(error!.code).send({
+                error_code: error!.type,
+                error_description: message
+            })
+        }
     }
 }   
