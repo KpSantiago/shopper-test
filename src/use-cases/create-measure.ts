@@ -43,7 +43,6 @@ export class CreateMeasureUseCase {
             customer_code
         });
 
-        // console.log(measure, getMeasureValue, image);
 
         return {
             measure: {
