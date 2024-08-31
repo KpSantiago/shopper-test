@@ -4,6 +4,7 @@ import path from "path";
 import { measuresRoutes } from "./http/controllers/routes";
 import { ZodError } from "zod";
 import { verifyImageURL } from "./http/middlewares/verify-image-url";
+import { env } from "./env";
 
 const app = fastify();
 
@@ -34,6 +35,10 @@ app.setErrorHandler((error, _request, reply) => {
                 };
             })
         });
+    }
+
+    if (env.NODE_ENV != "production") {
+        console.error(error);
     }
 
     return reply.status(500).send({ message: "Internal server Error" })
