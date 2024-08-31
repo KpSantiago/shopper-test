@@ -29,6 +29,6 @@ export class ConfirmMeasureValueUseCase {
 
         this.measureRepository.save(measure_uuid, measure);
 
-        return { success: true };
+        return { success: measure.has_confirmed };
     }
 }
