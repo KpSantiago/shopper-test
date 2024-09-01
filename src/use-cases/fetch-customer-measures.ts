@@ -1,6 +1,7 @@
-import { Measure, MeasureType } from "@prisma/client";
+import { Measure } from "@prisma/client";
 import { MeasureRepository } from "../repositories/measure-repository";
 import { MeasureNotFoundError } from "./@errors/measure-not-found-error";
+import { MeasureType } from "../@types/MeasureType";
 
 interface FetchCustomerMeasuresUseCaseRequest {
     customer_code: string;

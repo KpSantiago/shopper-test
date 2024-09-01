@@ -1,7 +1,7 @@
-import { MeasureType } from "@prisma/client";
 import { MeasureRepository } from "../repositories/measure-repository";
 import { MeasurementProvider } from "../providers/measurement-provider";
 import { MeasureAlreadyExistsError } from "./@errors/measure-already-exists-error";
+import { MeasureType } from "../@types/MeasureType";
 
 interface CreateMeasureUseCaseRequest {
     image_name: string;

@@ -1,4 +1,5 @@
-import { Measure, MeasureType, Prisma } from "@prisma/client";
+import { Measure, Prisma } from "@prisma/client";
+import { MeasureType } from "../@types/MeasureType";
 
 export interface MeasureRepository {
     create(measure: Prisma.MeasureCreateInput): Promise<Measure>;

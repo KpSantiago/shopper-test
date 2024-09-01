@@ -1,7 +1,8 @@
-import { Measure, MeasureType, Prisma } from "@prisma/client";
+import { Measure, Prisma } from "@prisma/client";
 import { MeasureRepository } from "../measure-repository";
 import { randomUUID } from "crypto";
 import dayjs from "dayjs";
+import { MeasureType } from "../../@types/MeasureType";
 
 export class InMemoryTestMeasureRepository implements MeasureRepository {
     public items: Measure[] = [];

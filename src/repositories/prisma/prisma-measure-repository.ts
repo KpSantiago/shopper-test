@@ -1,7 +1,8 @@
-import { Prisma, Measure, MeasureType } from "@prisma/client";
+import { Prisma, Measure } from "@prisma/client";
 import { MeasureRepository } from "../measure-repository";
 import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
+import { MeasureType } from "../../@types/MeasureType";
 
 export class PrismaMeasureRepository implements MeasureRepository {
     async create(measure: Prisma.MeasureCreateInput): Promise<Measure> {

@@ -23,6 +23,7 @@
     "fastify-static": "4.6.1",
     "fs": "0.0.1-security",
     "prisma": "5.18.0",
+    "sqlite": "5.1.1",
     "typescript": "^5.5.4",
     "zod": "3.23.8"
   },

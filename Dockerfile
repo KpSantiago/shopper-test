@@ -1,23 +1,21 @@
-FROM bitnami/node AS builder
+FROM bitnami/node
 
 WORKDIR /app
 
-COPY .npmrc ./
-COPY package*.json ./
-COPY prisma ./prisma/
+RUN git clone https://github.com/KpSantiago/shopper-test.git
 
-RUN npm install
+COPY prisma ./shopper-test/prisma
+COPY .npmrc ./shopper-test/.npmrc
+COPY package*.json ./shopper-test/package.json
 
 COPY . .
+
+RUN npm ci
 
 RUN mkdir -p uploads
 RUN npm run build
 
-FROM bitnami/node
-
-COPY --from=builder /app/node_modules  ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/build ./build
+RUN npx prisma migrate deploy
 
 EXPOSE 3333
 
