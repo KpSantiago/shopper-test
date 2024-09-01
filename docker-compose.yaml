@@ -1,20 +1,9 @@
 version: "3"
 
 services:
-  # database:
-  #   image: bitnami/postgresql
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - POSTGRESQL_USERNAME=docker
-  #     - POSTGRESQL_PASSWORD=docker
-  #     - POSTGRESQL_DATABASE=test_database
-
   api:
-    # depends_on:
-    #   - database
     environment:
-      - DATABASE_URL="file:./prisma/database.db"
+      - DATABASE_URL=file:./prisma/database.db
       - NODE_ENV=dev
       - PORT=3333
       - GEMINI_API_KEY=${GEMINI_API_KEY}
@@ -25,4 +14,3 @@ services:
       - 3333:3333
     volumes:
       - ./uploads:/src/images
-    command: ["npm", "run", "start:prod"]
