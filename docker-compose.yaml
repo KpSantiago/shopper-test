@@ -3,9 +3,6 @@ version: "3"
 services:
   api:
     environment:
-      - DATABASE_URL=file:./prisma/database.db
-      - NODE_ENV=dev
-      - PORT=3333
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     build:
       context: .

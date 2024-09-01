@@ -12,6 +12,10 @@ COPY . .
 
 RUN npm ci
 
+ENV DATABASE_URL=file:./prisma/database.db
+ENV NODE_ENV=dev
+ENV PORT=3333
+
 RUN npx prisma migrate dev
 
 RUN mkdir -p uploads
