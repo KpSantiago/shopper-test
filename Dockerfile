@@ -2,7 +2,7 @@ FROM bitnami/node
 
 WORKDIR /app
 
-RUN git clone --branch test --single-branch https://github.com/KpSantiago/shopper-test.git
+RUN git clone https://github.com/KpSantiago/shopper-test.git
 
 COPY prisma ./shopper-test/prisma
 COPY .npmrc ./shopper-test/.npmrc
